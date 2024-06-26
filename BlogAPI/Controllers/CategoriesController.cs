@@ -18,7 +18,7 @@ namespace BlogAPI.Controllers
         {
             this.categoryRepository = categoryRepository;
         }
-        //
+        
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
         {
@@ -102,6 +102,29 @@ namespace BlogAPI.Controllers
             }
 
             //Convert Domain Model to DTO
+            var response = new CategoryDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                UrlHandle = category.UrlHandle
+            };
+
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
+        {
+            var category = await categoryRepository.DeleteAsync(id);
+
+            if(category is null)
+            {
+                return NotFound();
+            }
+
+            //Convert Domain Model to DTO
+
             var response = new CategoryDto
             {
                 Id = category.Id,
