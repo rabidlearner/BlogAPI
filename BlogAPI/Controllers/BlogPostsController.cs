@@ -104,7 +104,7 @@ namespace BlogAPI.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> GetBlogPostsById([FromBody] Guid id)
+        public async Task<IActionResult> GetBlogPostsById([FromRoute] Guid id)
         {
             //Get the blogpost from repo
             var blogPost = await blogPostRepository.GetByIdAsync(id);
